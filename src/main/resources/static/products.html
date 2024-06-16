@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Products - KURSACH</title>
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/slick.css"/>
+    <link href="css/tooplate-little-fashion.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding-top: 40px; /* Отступ для фиксированной шапки */
+        }
+        .site-header {
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            height: 40px;
+            margin: 0; /* Нулевые отступы */
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            height: 100%; /* Высота 100% от родительского элемента (шапки) */
+        }
+        .search-bar input[type="text"] {
+            width: 200px;
+            padding: 4px; /* Отступ для высоты 40px */
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .search-bar button {
+            padding: 4px 5px; /* Отступ для высоты 40px */
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+
+        .kursach {
+            color: black;
+            cursor: pointer;
+            font-size: 1.5em; /* Размер шрифта */
+            font-weight: bold;
+            height: 100%; /* Высота 100% от родительского элемента (шапки) */
+            display: flex;
+            align-items: center;
+            margin-left: auto; /* Перемещаем KURSACH вправо */
+            margin-right: auto; /* Перемещаем KURSACH влево */
+        }
+        .icon-group {
+            display: flex;
+            align-items: center;
+            height: 100%; /* Высота 100% от родительского элемента (шапки) */
+        }
+        .icon-group a {
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .footer-section {
+            background-color: white; /* Изменение цвета фона на белый */
+            padding: 20px 0;
+            border-top: 1px solid #e7e7e7;
+        }
+        .footer-category {
+            margin-bottom: 20px;
+        }
+        .footer-category h4 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .footer-category ul {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-category ul li {
+            margin-bottom: 10px;
+        }
+        .footer-category ul li a {
+            color: #343a40;
+            text-decoration: none;
+        }
+        .footer-category ul li a:hover {
+            text-decoration: underline;
+        }
+        .sort-dropdown {
+            margin-bottom: 20px;
+        }
+        .banner {
+            width: 100%;
+            margin-bottom: 20px;
+            margin-top: 70px; /* Отступ от верхней части страницы */
+        }
+        .product-thumb {
+            position: relative;
+            overflow: hidden;
+        }
+        .product-thumb img.secondary-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .product-container .product-thumb img {
+            width: 100%;
+            height: auto; /* Исправление размера изображений */
+        }
+
+        .product-thumb:hover img.secondary-image {
+            opacity: 1;
+        }
+        .product-thumb img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <!-- Header Section -->
+    <header class="site-header">
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" placeholder="Search products...">
+            <button><i class="bi bi-search"></i></button>
+        </div>
+        <!-- KURSACH -->
+        <span class="kursach" onclick="location.href='index.html'">KURSACH</span>
+        <!-- Floating Icons -->
+        <div class="icon-group">
+            <a class="nav-link" href="sign-in.html"><i class="bi bi-person"></i></a>
+            <a class="nav-link" href="product-detail.html"><i class="bi bi-cart"></i></a>
+        </div>
+    </header>
+
+    <!-- Banner -->
+    <img src="images/mens-products.png" alt="Banner" class="img-fluid banner">
+
+    <!-- Sort Dropdown -->
+    <div class="container sort-dropdown">
+        <div class="row">
+            <div class="col-12">
+                <select id="sortSelect" class="form-select" aria-label="Sort by">
+                    <option value="default" selected>Sort by</option>
+                    <option value="lowToHigh">Price: Low to High</option>
+                    <option value="highToLow">Price: High to Low</option>
+                    <option value="newest">Newest Arrivals</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sort and Filter Dropdown -->
+    <div class="container sort-filter-dropdown">
+        <div class="row">
+            <!-- Filter Dropdown -->
+            <div class="col-12">
+                <select id="categorySelect" class="form-select" aria-label="Filter by Category">
+                    <option value="all" selected>All Categories</option>
+                    <option value="shorts">Shorts</option>
+                    <option value="sports-suit">Sports Suit</option>
+                    <option value="t-shirt">T-Shirt</option>
+                    <option value="trousers">Trousers</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <!-- Products Section -->
+    <section class="product-detail section-padding">
+        <div class="container">
+            <div class="row" id="products">
+                <!-- Продукт 1: Shorts Black -->
+                <div class="col-lg-4 col-12 mb-3 product-thumb" data-category="shorts">
+                    <div class="product-thumb-inner">
+                        <a href="shorts-black.html" target="_blank">
+                            <img src="images/product/ShortsBlack1.JPG" class="img-fluid product-image primary-image" alt="Shorts Black 1">
+                            <img src="images/product/ShortsBlack2.JPG" class="img-fluid product-image secondary-image" alt="Shorts Black 2">
+                        </a>
+                        <div class="product-info d-flex">
+                            <div>
+                                <h5 class="product-title mb-0">
+                                    <a href="shorts-black.html" target="_blank" class="product-title-link">Shorts Black</a>
+                                </h5>
+                                <p class="product-p">Comfortable black shorts.</p>
+                            </div>
+                            <small class="product-price text-muted ms-auto">$19.99</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Продукт 2: Shorts Green -->
+                <div class="col-lg-4 col-12 mb-3 product-thumb" data-category="shorts">
+                    <div class="product-thumb-inner">
+                        <a href="shorts-green.html" target="_blank">
+                            <img src="images/product/ShortsGreen1.JPG" class="img-fluid product-image primary-image" alt="Shorts Green 1">
+                            <img src="images/product/ShortsGreen2.JPG" class="img-fluid product-image secondary-image" alt="Shorts Green 2">
+                        </a>
+                        <div class="product-info d-flex">
+                            <div>
+                                <h5 class="product-title mb-0">
+                                    <a href="shorts-green.html" target="_blank" class="product-title-link">Shorts Green</a>
+                                </h5>
+                                <p class="product-p">Stylish green shorts.</p>
+                            </div>
+                            <small class="product-price text-muted ms-auto">$19.99</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Продукт 3: Shorts Grey -->
+                <div class="col-lg-4 col-12 mb-3 product-thumb" data-category="shorts">
+                    <div class="product-thumb-inner">
+                        <a href="shorts-grey.html" target="_blank">
+                            <img src="images/product/ShortsGrey1.JPG" class="img-fluid product-image primary-image" alt="Shorts Grey 1">
+                            <img src="images/product/ShortsGrey2.JPG" class="img-fluid product-image secondary-image" alt="Shorts Grey 2">
+                        </a>
+                        <div class="product-info d-flex">
+                            <div>
+                                <h5 class="product-title mb-0">
+                                    <a href="shorts-grey.html" target="_blank" class="product-title-link">Shorts Grey</a>
+                                </h5>
+                                <p class="product-p">Casual grey shorts.</p>
+                            </div>
+                            <small class="product-price text-muted ms-auto">$19.99</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Продукт 4: Sports Suit Blue -->
+                <div class="col-lg-4 col-12 mb-3 product-thumb" data-category="sports-suit">
+                    <div class="product-thumb-inner">
+                        <a href="sports-suit-blue.html" target="_blank">
+                            <img src="images/product/SportsSuitBlue1.JPG" class="img-fluid product-image primary-image" alt="Sports Suit Blue 1">
+                            <img src="images/product/SportsSuitBlue3.JPG" class="img-fluid product-image secondary-image" alt="Sports Suit Blue 2">
+                        </a>
+                        <div class="product-info d-flex">
+                            <div>
+                                <h5 class="product-title mb-0">
+                                    <a href="sports-suit-blue.html" target="_blank" class="product-title-link">Sports Suit Blue</a>
+                                </h5>
+                                <p class="product-p">Sporty blue suit.</p>
+                            </div>
+                            <small class="product-price text-muted ms-auto">$39.99</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Продукт 5: Sports Suit Gray -->
+                <div class="col-lg-4 col-12 mb-3 product-thumb" data-category="sports-suit">
+                    <div class="product-thumb-inner">
+                        <a href="sports-suit-gray.html" target="_blank">
+                            <img src="images/product/SportsSuitGray1.JPG" class="img-fluid product-image primary-image" alt="Sports Suit Gray 1">
+                            <img src="images/product/SportsSuitGray2.JPG" class="img-fluid product-image secondary-image" alt="Sports Suit Gray 2">
+                        </a>
+                        <div class="product-info d-flex">
+                            <div>
+                                <h5 class="product-title mb-0">
+                                    <a href="sports-suit-gray.html" target="_blank" class="product-title-link">Sports Suit Gray</a>
+                                </h5>
+                                <p class="product-p">Sporty gray suit.</p>
+                            </div>
+                            <small class="product-price text-muted ms-auto">$39.99</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Продукт 6: Sports Suit Green -->
+                <div class="col-lg-4 col-12 mb-3 product-thumb" data-category="sports-suit">
+                    <div class="product-thumb-inner">
+                        <a href="sports-suit-green.html" target="_blank">
+                            <img src="images/product/SportsSuitGreen1.JPG" class="img-fluid product-image primary-image" alt="Sports Suit Green 1">
+                            <img src="images/product/SportsSuitGreen2.JPG" class="img-fluid product-image secondary-image" alt="Sports Suit Green 2">
+                        </a>
+                        <div class="product-info d-flex">
+                            <div>
+                                <h5 class="product-title mb-0">
+                                    <a href="sports-suit-green.html" target="_blank" class="product-title-link">Sports Suit Green</a>
+                                </h5>
+                                <p class="product-p">Sporty green suit.</p>
+                            </div>
+                            <small class="product-price text-muted ms-auto">$39.99</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Продукт 7: T-Shirt Black -->
+                <div class="col-lg-4 col-12 mb-3 product-thumb" data-category="t-shirt">
+                    <div class="product-thumb-inner">
+                        <a href="t-shirt-black.html" target="_blank">
+                            <img src="images/product/T-ShirtBlack1.JPG" class="img-fluid product-image primary-image" alt="T-Shirt Black 1">
+                            <img src="images/product/T-ShirtBlack2.JPG" class="img-fluid product-image secondary-image" alt="T-Shirt Black 2">
+                        </a>
+                        <div class="product-info d-flex">
+                            <div>
+                                <h5 class="product-title mb-0">
+                                    <a href="t-shirt-black.html" target="_blank" class="product-title-link">T-Shirt Black</a>
+                                </h5>
+                                <p class="product-p">Stylish black T-shirt.</p>
+                            </div>
+                            <small class="product-price text-muted ms-auto">$24.99</small>
+                        </div>
+                    </div>
+                </div>
+                <!-- Продукт 8: T-Shirt Gray -->
+                <div class="col-lg-4 col-12 mb-3 product-thumb" data-category="t-shirt">
+                    <div class="product-thumb-inner">
+                        <a href="t-shirt-gray.html" target="_blank">
+                            <img src="images/product/T-ShirtGray1.JPG" class="img-fluid product-image primary-image" alt="T-Shirt Gray 1">
+                            <img src="images/product/T-ShirtGray2.JPG" class="img-fluid product-image secondary-image" alt="T-Shirt Gray 2">
+                        </a>
+                        <div class="product-info d-flex">
+                            <div>
+                                <h5 class="product-title mb-0">
+                                    <a href="t-shirt-gray.html" target="_blank" class="product-title-link">T-Shirt Gray</a>
+                                </h5>
+                                <p class="product-p">Casual gray T-shirt.</p>
+                            </div>
+                            <small class="product-price text-muted ms-auto">$24.99</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Продукт 9: T-Shirt Green -->
+                <div class="col-lg-4 col-12 mb-3 product-thumb" data-category="t-shirt">
+                    <div class="product-thumb-inner">
+                        <a href="t-shirt-green.html" target="_blank">
+                            <img src="images/product/T-ShirtGreen1.JPG" class="img-fluid product-image primary-image" alt="T-Shirt Green 1">
+                            <img src="images/product/T-ShirtGreen2.JPG" class="img-fluid product-image secondary-image" alt="T-Shirt Green 2">
+                        </a>
+                        <div class="product-info d-flex">
+                            <div>
+                                <h5 class="product-title mb-0">
+                                    <a href="t-shirt-green.html" target="_blank" class="product-title-link">T-Shirt Green</a>
+                                </h5>
+                                <p class="product-p">Fresh green T-shirt.</p>
+                            </div>
+                            <small class="product-price text-muted ms-auto">$24.99</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Продукт 10: T-Shirt White -->
+                <div class="col-lg-4 col-12 mb-3 product-thumb" data-category="t-shirt">
+                    <div class="product-thum-inner">
+                        <a href="t-shirt-white.html" target="_blank">
+                            <img src="images/product/T-ShirtWhite1.JPG" class="img-fluid product-image primary-image" alt="T-Shirt White 1">
+                            <img src="images/product/T-ShirtWhite2.JPG" class="img-fluid product-image secondary-image" alt="T-Shirt White 2">
+                        </a>
+                        <div class="product-info d-flex">
+                            <div>
+                                <h5 class="product-title mb-0">
+                                    <a href="t-shirt-white.html" target="_blank" class="product-title-link">T-Shirt White</a>
+                                </h5>
+                                <p class="product-p">Classic white t-shirt.</p>
+                            </div>
+                            <small class="product-price text-muted ms-auto">$14.99</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Продукт 11: Trousers Black -->
+                <div class="col-lg-4 col-12 mb-3 product-thumb" data-category="trousers">
+                    <div class="product-thumb-inner">
+                        <a href="trousers-black.html" target="_blank">
+                            <img src="images/product/TrousersBlack1.JPG" class="img-fluid product-image primary-image" alt="Trousers Black 1">
+                            <img src="images/product/TrousersBlack2.JPG" class="img-fluid product-image secondary-image" alt="Trousers Black 2">
+                        </a>
+                        <div class="product-info d-flex">
+                            <div>
+                                <h5 class="product-title mb-0">
+                                    <a href="trousers-black.html" target="_blank" class="product-title-link">Trousers Black</a>
+                                </h5>
+                                <p class="product-p">Stylish black trousers.</p>
+                            </div>
+                            <small class="product-price text-muted ms-auto">$29.99</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Продукт 12: Trousers Green -->
+                <div class="col-lg-4 col-12 mb-3 product-thumb" data-category="trousers">
+                    <div class="product-thumb-inner">
+                        <a href="trousers-green.html" target="_blank">
+                            <img src="images/product/TrousersGreen1.JPG" class="img-fluid product-image primary-image" alt="Trousers Green 1">
+                            <img src="images/product/TrousersGreen2.JPG" class="img-fluid product-image secondary-image" alt="Trousers Green 2">
+                        </a>
+                        <div class="product-info d-flex">
+                            <div>
+                                <h5 class="product-title mb-0">
+                                    <a href="trousers-green.html" target="_blank" class="product-title-link">Trousers Green</a>
+                                </h5>
+                                <p class="product-p">Comfortable green trousers.</p>
+                            </div>
+                            <small class="product-price text-muted ms-auto">$29.99</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Продукт 13: Trousers Grey -->
+                <div class="col-lg-4 col-12 mb-3 product-thumb" data-category="trousers">
+                    <div class="product-thumb-inner">
+                        <a href="trousers-grey.html" target="_blank">
+                            <img src="images/product/TrousersGrey1.JPG" class="img-fluid product-image primary-image" alt="Trousers Grey 1">
+                            <img src="images/product/TrousersGrey2.JPG" class="img-fluid product-image secondary-image" alt="Trousers Grey 2">
+                        </a>
+                        <div class="product-info d-flex">
+                            <div>
+                                <h5 class="product-title mb-0">
+                                    <a href="trousers-grey.html" target="_blank" class="product-title-link">Trousers Grey</a>
+                                </h5>
+                                <p class="product-p">Classic grey trousers.</p>
+                            </div>
+                            <small class="product-price text-muted ms-auto">$29.99</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- Footer Section -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <!-- Contact Info -->
+                <div class="col-lg-4 footer-category">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li>Odessa</li>
+                        <li>0734757533</li>
+                        <li>dmat771@gmail.com</li>
+                    </ul>
+                </div>
+                <!-- Information -->
+                <div class="col-lg-4 footer-category">
+                    <h4>Information</h4>
+                    <ul>
+                        <li><a href="about-us.html">About Us</a></li>
+                        <li><a href="delivery-information.html">Delivery Information</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="payment-returns.html">Payment & Returns</a></li>
+                    </ul>
+                </div>
+                <!-- Personal Account -->
+                <div class="col-lg-4 footer-category">
+                    <h4>My Account</h4>
+                    <ul>
+                        <li><a href="sign-in.html">My Account</a></li>
+                </div>
+            </div>
+        </div>
+    </footer>
+</main>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchButton = document.querySelector(".search-bar button");
+        const searchInput = document.querySelector(".search-bar input[type='text']");
+
+        searchButton.addEventListener("click", function() {
+            const query = searchInput.value;
+
+            if (query) {
+                fetch(`/api/products/search?name=${encodeURIComponent(query)}`)
+                    .then(response => response.text())
+                    .then(siteName => {
+                        if (siteName !== "Product not found") {
+                            window.location.href = siteName;
+                        } else {
+                            alert("Product not found");
+                        }
+                    })
+                    .catch(error => console.error("Error:", error));
+            } else {
+                alert("Please enter a product name to search");
+            }
+        });
+    });
+</script>
+
+<!-- SCRIPTS -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/slick.min.js"></script>
+<script src="js/custom.js"></script>
+<script>
+    // Sample product data for demonstration
+    const products = [
+        {
+            title: "Shorts Black",
+            price: 19.99,
+            dateAdded: new Date('2023-01-10'),
+            category: 'shorts',
+            primaryImage: "images/product/ShortsBlack1.JPG",
+            secondaryImage: "images/product/ShortsBlack2.JPG",
+            url: "shorts-black.html"
+        },
+        {
+            title: "Shorts Green",
+            price: 22.99,
+            dateAdded: new Date('2023-05-30'),
+            category: 'shorts',
+            primaryImage: "images/product/ShortsGreen1.JPG",
+            secondaryImage: "images/product/ShortsGreen2.JPG",
+            url: "shorts-green.html"
+        },
+        {
+            title: "Shorts Grey",
+            price: 19.99,
+            dateAdded: new Date('2023-06-01'),
+            category: 'shorts',
+            primaryImage: "images/product/ShortsGrey1.JPG",
+            secondaryImage: "images/product/ShortsGrey2.JPG",
+            url: "shorts-grey.html"
+        },
+        {
+            title: "Sports Suit Blue",
+            price: 39.99,
+            dateAdded: new Date('2023-06-05'),
+            category: 'sports-suit',
+            primaryImage: "images/product/SportsSuitBlue1.JPG",
+            secondaryImage: "images/product/SportsSuitBlue2.JPG",
+            url: "sports-suit-blue.html"
+        },
+        {
+            title: "Sports Suit Gray",
+            price: 39.99,
+            dateAdded: new Date('2023-06-10'),
+            category: 'sports-suit',
+            primaryImage: "images/product/SportsSuitGray1.JPG",
+            secondaryImage: "images/product/SportsSuitGray3.JPG",
+            url: "sports-suit-gray.html"
+        },
+        {
+            title: "Sports Suit Green",
+            price: 39.99,
+            dateAdded: new Date('2023-06-15'),
+            category: 'sports-suit',
+            primaryImage: "images/product/SportsSuitGreen1.JPG",
+            secondaryImage: "images/product/SportsSuitGreen2.JPG",
+            url: "sports-suit-green.html"
+        },
+        {
+            title: "T-Shirt Black",
+            price: 24.99,
+            dateAdded: new Date('2023-07-01'),
+            category: 't-shirt',
+            primaryImage: "images/product/T-ShirtBlack1.JPG",
+            secondaryImage: "images/product/T-ShirtBlack2.JPG",
+            url: "t-shirt-black.html"
+        },
+        {
+            title: "T-Shirt Gray",
+            price: 24.99,
+            dateAdded: new Date('2023-07-05'),
+            category: 't-shirt',
+            primaryImage: "images/product/T-ShirtGray1.JPG",
+            secondaryImage: "images/product/T-ShirtGray2.JPG",
+            url: "t-shirt-gray.html"
+        },
+        {
+            title: "T-Shirt Green",
+            price: 24.99,
+            dateAdded: new Date('2023-07-10'),
+            category: 't-shirt',
+            primaryImage: "images/product/T-ShirtGreen1.JPG",
+            secondaryImage: "images/product/T-ShirtGreen2.JPG",
+            url: "t-shirt-green.html"
+        },
+        {
+            title: "T-Shirt White",
+            price: 14.99,
+            dateAdded: new Date('2023-07-15'),
+            category: 't-shirt',
+            primaryImage: "images/product/T-ShirtWhite1.JPG",
+            secondaryImage: "images/product/T-ShirtWhite2.JPG",
+            url: "t-shirt-white.html"
+        },
+        {
+            title: "Trousers Black",
+            price: 29.99,
+            dateAdded: new Date('2023-08-01'),
+            category: 'trousers',
+            primaryImage: "images/product/TrousersBlack1.JPG",
+            secondaryImage: "images/product/TrousersBlack2.JPG",
+            url: "trousers-black.html"
+        },
+        {
+            title: "Trousers Green",
+            price: 29.99,
+            dateAdded: new Date('2023-08-05'),
+            category: 'trousers',
+            primaryImage: "images/product/TrousersGreen1.JPG",
+            secondaryImage: "images/product/TrousersGreen2.JPG",
+            url: "trousers-green.html"
+        },
+        {
+            title: "Trousers Grey",
+            price: 29.99,
+            dateAdded: new Date('2023-08-10'),
+            category: 'trousers',
+            primaryImage: "images/product/TrousersGrey1.JPG",
+            secondaryImage: "images/product/TrousersGrey2.JPG",
+            url: "trousers-grey.html"
+        }
+    ];
+
+    // Function to render products based on the sorted/filtered data
+    function renderProducts(filteredProducts) {
+        const productsContainer = document.getElementById('products');
+        productsContainer.innerHTML = '';
+
+        filteredProducts.forEach(product => {
+            const productHtml = `
+                <div class="col-lg-4 col-12 mb-3 product-thumb" data-category="${product.category}">
+                    <div class="product-thumb-inner">
+                        <a href="${product.url}" target="_blank">
+                            <img src="${product.primaryImage}" class="img-fluid product-image primary-image" alt="${product.title}">
+                            <img src="${product.secondaryImage}" class="img-fluid product-image secondary-image" alt="${product.title}">
+                        </a>
+                        <div class="product-info d-flex">
+                            <div>
+                                <h5 class="product-title mb-0">
+                                    <a href="${product.url}" target="_blank" class="product-title-link">${product.title}</a>
+                                </h5>
+                                <p class="product-p">Comfortable black shorts.</p>
+                            </div>
+                            <small class="product-price text-muted ms-auto">$${product.price.toFixed(2)}</small>
+                        </div>
+                    </div>
+                </div>
+            `;
+            productsContainer.insertAdjacentHTML('beforeend', productHtml);
+        });
+    }
+
+    // Initial render of all products
+    renderProducts(products);
+
+    // Event listener for sorting
+    document.getElementById('sortSelect').addEventListener('change', function() {
+        const selectedSort = this.value;
+
+        let sortedProducts = [...products];
+        if (selectedSort === 'lowToHigh') {
+            sortedProducts.sort((a, b) => a.price - b.price);
+        } else if (selectedSort === 'highToLow') {
+            sortedProducts.sort((a, b) => b.price - a.price);
+        } else if (selectedSort === 'newest') {
+            sortedProducts.sort((a, b) => b.dateAdded - a.dateAdded);
+        }
+
+        renderProducts(sortedProducts);
+    });
+
+    // Event listener for filtering
+    document.getElementById('categorySelect').addEventListener('change', function() {
+        const selectedCategory = this.value;
+
+        const filteredProducts = selectedCategory === 'all' ? products : products.filter(product => product.category === selectedCategory);
+        renderProducts(filteredProducts);
+    });
+</script>
+</body>
+</html>
